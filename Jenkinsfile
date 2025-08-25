@@ -81,17 +81,17 @@ pipeline {
         //     }
         // }
 
-        stage('Save Docker Images as Tar') {
-            steps {
-                sh "docker save -o ${BACKEND_IMAGE}-${BUILD_NUMBER}.tar ${BACKEND_IMAGE}:${BUILD_NUMBER}"
-                sh "docker save -o ${DATACLIENT_IMAGE}-${BUILD_NUMBER}.tar ${DATACLIENT_IMAGE}:${BUILD_NUMBER}"
-            }
-            post {
-                success {
-                    archiveArtifacts artifacts: '*.tar', fingerprint: true
-                }
-            }
-        }
+        // stage('Save Docker Images as Tar') {
+        //     steps {
+        //         sh "docker save -o ${BACKEND_IMAGE}-${BUILD_NUMBER}.tar ${BACKEND_IMAGE}:${BUILD_NUMBER}"
+        //         sh "docker save -o ${DATACLIENT_IMAGE}-${BUILD_NUMBER}.tar ${DATACLIENT_IMAGE}:${BUILD_NUMBER}"
+        //     }
+        //     post {
+        //         success {
+        //             archiveArtifacts artifacts: '*.tar', fingerprint: true
+        //         }
+        //     }
+        // }
         
         // stage('Push Images to DockerHub') {
         //     steps {
