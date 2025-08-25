@@ -126,7 +126,7 @@ pipeline {
         stage('Wait for ZAP Ready') {
             steps {
                 script {
-                sh "sleep 30"
+                sh "sleep 60"
                 def maxRetries = 10
                 def count = 0
                 def zapReady = false
@@ -167,7 +167,7 @@ pipeline {
             sh '''#!/bin/bash
             
             docker compose down zap
-            
+
             # Get all images for our project
             ALL_IMAGES=$(docker images --format "{{.Repository}}:{{.Tag}}" | grep "^${DOCKER_USERNAME}/reno-")
             
