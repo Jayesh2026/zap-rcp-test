@@ -1,6 +1,9 @@
 FROM eclipse-temurin:21-jre-alpine
  
 WORKDIR /app
+
+# Install tools 
+RUN apk update && apk add --no-cache bash dos2unix unzip curl
  
 COPY build/libs/backend-0.0.1-SNAPSHOT.jar /app/rcp-backend.jar
  
