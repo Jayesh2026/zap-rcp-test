@@ -45,7 +45,7 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts artifacts: 'backend/build/libs/*.war', fingerprint: true
+                    archiveArtifacts artifacts: 'backend/build/libs/*.jar', fingerprint: true
                     archiveArtifacts artifacts: 'dataclient/build/libs/*.jar', fingerprint: true
                 }
             }
