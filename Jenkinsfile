@@ -37,7 +37,6 @@ pipeline {
             steps {
                 sh 'chmod +x ./gradlew'
                 sh 'chmod +x ./zap_scan.sh'
-                sh 'chmod +x ./gradle'
                 sh 'java -version'
                 sh 'node --version'
                 sh 'npm --version'
@@ -48,7 +47,7 @@ pipeline {
 
         stage('Build All Modules') {
             steps {
-                sh './gradlew build -x test'
+                sh './gradlew clean build -x test'
             }
             post {
                 success {
@@ -127,7 +126,7 @@ pipeline {
         stage('Wait for ZAP Ready') {
             steps {
                 script {
-                sh "sleep 30"
+                sh "sleep 60"
                 def maxRetries = 10
                 def count = 0
                 def zapReady = false
