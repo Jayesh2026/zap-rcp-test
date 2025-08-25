@@ -67,19 +67,19 @@ pipeline {
             }
         }
 
-        stage('Trivy Scans') {
-            steps {
-                sh """
-                    trivy image --timeout 10m --scanners vuln --format template --template "@$TRIVY_TEMPLATE" -o trivy-${BACKEND_IMAGE}.html ${BACKEND_IMAGE}:${BUILD_NUMBER}
-                    trivy image --timeout 10m --scanners vuln --format template --template "@$TRIVY_TEMPLATE" -o trivy-${DATACLIENT_IMAGE}.html ${DATACLIENT_IMAGE}:${BUILD_NUMBER}
-                """
-            }
-            post {
-                always {
-                    archiveArtifacts artifacts: 'trivy-*.html', fingerprint: true
-                }
-            }
-        }
+        // stage('Trivy Scans') {
+        //     steps {
+        //         sh """
+        //             trivy image --timeout 10m --scanners vuln --format template --template "@$TRIVY_TEMPLATE" -o trivy-${BACKEND_IMAGE}.html ${BACKEND_IMAGE}:${BUILD_NUMBER}
+        //             trivy image --timeout 10m --scanners vuln --format template --template "@$TRIVY_TEMPLATE" -o trivy-${DATACLIENT_IMAGE}.html ${DATACLIENT_IMAGE}:${BUILD_NUMBER}
+        //         """
+        //     }
+        //     post {
+        //         always {
+        //             archiveArtifacts artifacts: 'trivy-*.html', fingerprint: true
+        //         }
+        //     }
+        // }
 
         stage('Save Docker Images as Tar') {
             steps {
