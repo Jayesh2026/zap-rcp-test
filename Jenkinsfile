@@ -35,6 +35,7 @@ pipeline {
                 sh 'npm --version'
                 sh 'docker --version'
                 sh 'trivy --version'
+                sh './gradle wrapper'
             }
         }
 
