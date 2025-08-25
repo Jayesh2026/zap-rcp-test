@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        GIT_REPO_URL     = 'https://github.com/Jayesh2026/reno-cloud-portal.git'
+        GIT_REPO_URL     = 'https://github.com/Jayesh2026/zap-rcp-test.git'
         DOCKER_USERNAME  = 'jayesh2026'
         BACKEND_IMAGE    = "${DOCKER_USERNAME}/reno-rcp"
         DATACLIENT_IMAGE   = "${DOCKER_USERNAME}/reno-dataclient"
@@ -115,7 +115,7 @@ pipeline {
                 sh 'docker compose up -d --build'
             }
         }
-        
+
         stage('Wait for ZAP Ready') {
             steps {
                 script {
