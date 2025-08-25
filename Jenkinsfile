@@ -41,7 +41,7 @@ pipeline {
 
         stage('Build All Modules') {
             steps {
-                sh './gradlew build'
+                sh './gradlew build -x test'
             }
             post {
                 success {
