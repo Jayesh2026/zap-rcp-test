@@ -30,12 +30,12 @@ pipeline {
         stage('Set Permissions & Verify Tools') {
             steps {
                 sh 'chmod +x ./gradlew'
+                sh 'chmod +x ./gradle'
                 sh 'java -version'
                 sh 'node --version'
                 sh 'npm --version'
                 sh 'docker --version'
                 sh 'trivy --version'
-                sh './gradlew wrapper'
             }
         }
 
