@@ -58,13 +58,13 @@ pipeline {
             }
         }
 
-        stage('Build Backend Image') {
-            steps {
-                dir('backend') {
-                    sh "docker build -t ${BACKEND_IMAGE}:${BUILD_NUMBER} ."
-                }
-            }
-        }
+        // stage('Build Backend Image') {
+        //     steps {
+        //         dir('backend') {
+        //             sh "docker build -t ${BACKEND_IMAGE}:${BUILD_NUMBER} ."
+        //         }
+        //     }
+        // }
 
         // stage('Build Dataclient Image') {
         //     steps {
