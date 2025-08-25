@@ -15,7 +15,7 @@ services:
     env_file:
       - ./env/otel-config.env
     networks:
-      - jenkins-network
+      - bnt-cnx-network
     healthcheck:
       test: ["CMD", "curl", "-fs", "http://localhost:8081/actuator/health"]
       interval: 10s
@@ -42,7 +42,7 @@ services:
   #     backend:
   #       condition: service_healthy
   #   networks:
-  #     - jenkins-network
+  #     - bnt-cnx-network
 
   # frontend:
   #   build:
@@ -55,7 +55,7 @@ services:
   #     backend:
   #       condition: service_healthy
   #   networks:
-  #     - jenkins-network
+  #     - bnt-cnx-network
 
   zap:
     image: ghcr.io/zaproxy/zaproxy:stable
@@ -75,7 +75,7 @@ services:
     ports:
       - "8090:8090"
     networks:
-      - jenkins-network
+      - bnt-cnx-network
     volumes:
       - ./zap_reports:/zap/wrk/:rw
     healthcheck:
@@ -88,6 +88,6 @@ services:
       - ZAP_LOG_LEVEL=INFO
 
 networks:
-  jenkins-network:
+  bnt-cnx-network:
     driver: bridge
     external: true
