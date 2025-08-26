@@ -75,8 +75,11 @@ pipeline {
         stage('Trivy Scans') {
             steps {
                 sh """
-                    trivy image --timeout 10m --scanners vuln --format template --template "@$TRIVY_TEMPLATE" -o trivy-${BACKEND_IMAGE}.html ${BACKEND_IMAGE}:${BUILD_NUMBER}
-                    trivy image --timeout 10m --scanners vuln --format template --template "@$TRIVY_TEMPLATE" -o trivy-${DATACLIENT_IMAGE}.html ${DATACLIENT_IMAGE}:${BUILD_NUMBER}
+                    BACKEND_NAME=\$(basename ${BACKEND_IMAGE})
+                    DATACLIENT_NAME=\$(basename ${DATACLIENT_IMAGE})
+
+                    trivy image --timeout 10m --scanners vuln --format template --template "@$TRIVY_TEMPLATE" -o trivy-\${BACKEND_NAME}.html ${BACKEND_IMAGE}:${BUILD_NUMBER}
+                    trivy image --timeout 10m --scanners vuln --format template --template "@$TRIVY_TEMPLATE" -o trivy-\${DATACLIENT_NAME}.html ${DATACLIENT_IMAGE}:${BUILD_NUMBER}
                 """
             }
             post {
@@ -86,17 +89,17 @@ pipeline {
             }
         }
 
-        // stage('Save Docker Images as Tar') {
-        //     steps {
-        //         sh "docker save -o ${BACKEND_IMAGE}-${BUILD_NUMBER}.tar ${BACKEND_IMAGE}:${BUILD_NUMBER}"
-        //         sh "docker save -o ${DATACLIENT_IMAGE}-${BUILD_NUMBER}.tar ${DATACLIENT_IMAGE}:${BUILD_NUMBER}"
-        //     }
-        //     post {
-        //         success {
-        //             archiveArtifacts artifacts: '*.tar', fingerprint: true
-        //         }
-        //     }
-        // }
+        stage('Save Docker Images as Tar') {
+            steps {
+                sh "docker save -o ${BACKEND_IMAGE}-${BUILD_NUMBER}.tar ${BACKEND_IMAGE}:${BUILD_NUMBER}"
+                sh "docker save -o ${DATACLIENT_IMAGE}-${BUILD_NUMBER}.tar ${DATACLIENT_IMAGE}:${BUILD_NUMBER}"
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: '*.tar', fingerprint: true
+                }
+            }
+        }
         
         // stage('Push Images to DockerHub') {
         //     steps {
