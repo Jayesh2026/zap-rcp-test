@@ -3,9 +3,11 @@ pipeline {
 
     environment {
         GIT_REPO_URL     = 'https://github.com/Jayesh2026/zap-rcp-test.git'
+        BACKEND_APP     = "reno-rcp"
+        DATACLIENT_APP  = "reno-dataclient"
         DOCKER_USERNAME  = 'jayesh2026'
-        BACKEND_IMAGE    = "${DOCKER_USERNAME}/reno-rcp"
-        DATACLIENT_IMAGE   = "${DOCKER_USERNAME}/reno-dataclient"
+        BACKEND_IMAGE    = "${DOCKER_USERNAME}/${BACKEND_APP}"
+        DATACLIENT_IMAGE   = "${DOCKER_USERNAME}/${DATACLIENT_APP}"
 
         // Environment variables passed into zap_scan.sh
         APP_URLS    = "http://rcp-backend:8081 http://rcp-dataclient:8082"
@@ -75,11 +77,8 @@ pipeline {
         stage('Trivy Scans') {
             steps {
                 sh """
-                    BACKEND_NAME=\$(basename ${BACKEND_IMAGE})
-                    DATACLIENT_NAME=\$(basename ${DATACLIENT_IMAGE})
-
-                    trivy image --timeout 10m --scanners vuln --format template --template "@$TRIVY_TEMPLATE" -o trivy-\${BACKEND_NAME}.html ${BACKEND_IMAGE}:${BUILD_NUMBER}
-                    trivy image --timeout 10m --scanners vuln --format template --template "@$TRIVY_TEMPLATE" -o trivy-\${DATACLIENT_NAME}.html ${DATACLIENT_IMAGE}:${BUILD_NUMBER}
+                    trivy image --timeout 10m --scanners vuln --format template --template "@$TRIVY_TEMPLATE" -o trivy-${BACKEND_APP}.html ${BACKEND_IMAGE}:${BUILD_NUMBER}
+                    trivy image --timeout 10m --scanners vuln --format template --template "@$TRIVY_TEMPLATE" -o trivy-${DATACLIENT_APP}.html ${DATACLIENT_IMAGE}:${BUILD_NUMBER}
                 """
             }
             post {
