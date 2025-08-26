@@ -11,7 +11,7 @@ EXPOSE 8081
  
 CMD ["java", "-jar", "rcp-backend.jar"]
 
-# Stage 1: Build custom JRE using jlink 
+# # Stage 1: Build custom JRE using jlink 
 # FROM eclipse-temurin:21-jdk-alpine AS jre-builder
 
 # RUN jlink --output /jre --verbose --strip-debug --compress=2 --no-header-files --no-man-pages \
